@@ -20,7 +20,7 @@
   // Only a desktop session id is accepted (the app's own rule), so this page can open nothing but a Claude session.
   const id = new URLSearchParams(location.search).get("s") || "";
   if (/^local_[A-Za-z0-9-]{1,64}$/.test(id)) {
-    const url = "claude://code/needs-input?session=" + id;
+    const url = "claude://code/continue?session=" + id;
     const a = document.getElementById("open");
     a.href = url; a.hidden = false;
     location.href = url;

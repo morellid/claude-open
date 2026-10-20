@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="noindex">
+<title>Open in Claude</title>
+<style>
+  :root { color-scheme: light dark; }
+  body { font: 16px/1.5 system-ui, sans-serif; max-width: 32rem; margin: 15vh auto; padding: 0 16px; }
+  a.btn { display: inline-block; padding: .6em 1.1em; border-radius: 8px; background: #c96442; color: #fff; text-decoration: none; }
+</style>
+</head>
+<body>
+<p id="msg">Opening the session in the Claude desktop app...</p>
+<p><a class="btn" id="open" hidden>Open in Claude</a></p>
+<script>
+  // Telegram only links http(s), so notifications point here and this page hands off to claude://.
+  // Only a desktop session id is accepted (the app's own rule), so this page can open nothing but a Claude session.
+  const id = new URLSearchParams(location.search).get("s") || "";
+  if (/^local_[A-Za-z0-9-]{1,64}$/.test(id)) {
+    const url = "claude://code/needs-input?session=" + id;
+    const a = document.getElementById("open");
+    a.href = url; a.hidden = false;
+    location.href = url;
+    document.getElementById("msg").textContent = "Opening the session in the Claude desktop app. If nothing happens, use the button. You can close this tab.";
+  } else {
+    document.getElementById("msg").textContent = "No valid session in this link.";
+  }
+</script>
+</body>
+</html>
